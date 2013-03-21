@@ -43,18 +43,19 @@ void setup() {
 void loop() {
   int filenumber;
   
-   Serial.println("Taking a picture in 3 seconds...");
-  delay(3000);
+   Serial.println("Taking a picture");
+  delay(1000);
  
-  if (SD.exists("filelist.txt"))
+  if (SD.exists("PICTURES/filelist.txt"))
   {
-   File filelist = SD.open("filelist.txt", FILE_WRITE);
+   File filelist = SD.open("PICTURES/filelist.txt", FILE_WRITE);
    filenumber = filelist.position();
    filelist.write("0");
    filelist.close();
    
   } else {
-    File filelist = SD.open("filelist.txt", FILE_WRITE); 
+    SD.mkdir("PICTURES");
+    File filelist = SD.open("PICTURES/filelist.txt", FILE_WRITE); 
     filelist.write("0");
     filelist.close();
   }
@@ -66,7 +67,7 @@ void loop() {
   
     char filename[20];
     String iterator = String(filenumber);
-    String myFilenameString = iterator + ".JPG";
+    String myFilenameString = "PICTURES/" + iterator + ".JPG";
     myFilenameString.toCharArray(filename, 20);
      /* if (! SD.exists(filename)) {
       return;
